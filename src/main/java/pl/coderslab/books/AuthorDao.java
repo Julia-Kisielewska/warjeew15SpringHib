@@ -10,20 +10,25 @@ import java.util.List;
 @Repository
 @Transactional
 public class AuthorDao {
-@PersistenceContext
-private EntityManager entityManager;
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
 
     public List<Author> findAll() {
-        return entityManager.createQuery("select a from Author a").getResultList();
+        return entityManager.createQuery("select b from Author b")
+                .getResultList();
     }
 
     public void save(Author author) {
         entityManager.persist(author);
     }
 
+
     public Author findById(Long id) {
         return entityManager.find(Author.class, id);
     }
+
 
     public void update(Author author) {
         entityManager.merge(author);
@@ -33,5 +38,4 @@ private EntityManager entityManager;
         entityManager.remove(entityManager.contains(author) ?
                 author : entityManager.merge(author));
     }
-
 }
