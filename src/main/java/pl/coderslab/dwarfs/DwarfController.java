@@ -2,9 +2,12 @@ package pl.coderslab.dwarfs;
 
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/dwarf")
@@ -33,5 +36,12 @@ public class DwarfController {
         return "";
     }
 
-    
+    @GetMapping("/all")
+    @ResponseBody
+    public String showAll() {
+        dwarfService.findAll().
+                forEach(d -> System.out.println(d.getName()));
+        return "list";
+    }
+
 }

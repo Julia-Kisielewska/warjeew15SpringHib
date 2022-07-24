@@ -1,10 +1,7 @@
 package pl.coderslab.books;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,4 +92,39 @@ public class BookController {
         return "";
     }
 
+    @RequestMapping("/all")
+    @ResponseBody
+    public String showAll() {
+        bookDao.findAll().forEach(b -> System.out.println(b.getTitle()));
+        return "list";
+    }
+
+    @RequestMapping("/rating")
+    @ResponseBody
+    public String findAllByRating(@RequestParam int rating) {
+        bookDao.findAllByRating(rating).forEach(b -> System.out.println(b.getTitle()));
+        return "test rating";
+    }
+
+    @RequestMapping("/any-publisher")
+    @ResponseBody
+    public String findWithAnyPublisher() {
+        bookDao.findWithAnyPublisher().forEach(b -> System.out.println(b.getTitle()));
+        return "books with any publisher";
+    }
+
+    @RequestMapping("/publisher")
+    @ResponseBody
+    public String findByPublisher(@RequestParam String publisher) {
+        bookDao.findByPublisher(publisher).forEach(b -> System.out.println(b.getTitle()));
+        return "books with publisher";
+    }
+
+    @RequestMapping("/check-author")
+    @ResponseBody
+    public String findBooksWithAuthors(@RequestParam long authorId) {
+        bookDao.findBooksWithAuthors(authorDao.findById(authorId))
+                .forEach(b -> System.out.println(b.getTitle()));
+        return "books with authors";
+    }
 }

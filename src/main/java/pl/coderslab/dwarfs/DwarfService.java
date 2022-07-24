@@ -2,6 +2,8 @@ package pl.coderslab.dwarfs;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DwarfService {
     private final DwarfDao dwarfDao;
@@ -24,5 +26,9 @@ public class DwarfService {
 
     public void delete(Dwarf dwarf){
         dwarfDao.delete(dwarf);
+    }
+
+    public List<Dwarf> findAll() {
+        return dwarfDao.findAll();
     }
 }
