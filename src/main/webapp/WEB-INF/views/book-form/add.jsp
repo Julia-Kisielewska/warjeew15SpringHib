@@ -8,8 +8,11 @@
 <body>
 <form:form method="post" modelAttribute="book">
     <form:hidden path="id"/>
+    Tytuł
     <form:input path="title"/>
+    Ocena
     <form:input path="rating"/>
+    Wydawca
     <form:select path="publisher" items="${publishers}" itemValue="id" itemLabel="name"/>
 
     <input type="submit" value="Save">

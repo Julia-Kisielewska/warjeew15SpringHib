@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/book-form")
@@ -17,6 +18,7 @@ public class BookFormController {
         this.bookDao = bookDao;
         this.publisherDao = publisherDao;
     }
+
     @GetMapping("/list")
     public String list(Model model) {
         model.addAttribute("books", bookDao.findAll());
@@ -36,5 +38,36 @@ public class BookFormController {
         bookDao.save(book);
         //save
         return "redirect:/book-form/list";
+    }
+
+    @GetMapping("/edit")
+    public String edit(Model model, @RequestParam(name = "id") String id) {
+        long idVal = Long.parseLong(id);
+        Book book = bookDao.findById(idVal);
+        model.addAttribute("book", book);
+//        model.addAttribute("publishers", publisherDao.findAll());
+        return "book-form/add";
+    }
+
+    @PostMapping("/edit")
+    public String edit (Book book, Model model){
+        bookDao.update(book);
+        return "redirect:/book-form/list";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam(name = "id") String id, Model model) {
+        long idVal = Long.parseLong(id);
+        Book book = bookDao.findById(idVal);
+        model.addAttribute("book", book);
+        model.addAttribute("publishers", publisherDao.findAll());
+        return "/book-form/delete";
+    }
+
+    @PostMapping("/delete")
+    public String delete(Book book, Model model){
+        bookDao.delete(book);
+        return "redirect:/book-form/list";
+
     }
 }

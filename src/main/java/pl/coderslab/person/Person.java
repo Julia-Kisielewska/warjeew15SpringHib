@@ -22,6 +22,6 @@ public class Person {
     private String email;
 
     @OneToOne
-    private Person person;
+    private PersonDetails personDetails;
 
 }
