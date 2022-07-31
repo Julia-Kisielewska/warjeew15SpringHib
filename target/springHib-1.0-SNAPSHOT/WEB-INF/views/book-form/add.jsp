@@ -14,6 +14,9 @@
     <form:input path="rating"/>
     Wydawca
     <form:select path="publisher" items="${publishers}" itemValue="id" itemLabel="name"/>
+    Autor
+    <form:select path="authors" items="${authors}" itemValue="id" itemLabel="fullName"/>
+
 
     <input type="submit" value="Save">
 </form:form>

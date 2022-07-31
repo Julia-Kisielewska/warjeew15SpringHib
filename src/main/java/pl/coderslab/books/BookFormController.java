@@ -2,10 +2,10 @@ package pl.coderslab.books;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/book-form")
@@ -14,9 +14,12 @@ public class BookFormController {
     private final BookDao bookDao;
     private final PublisherDao publisherDao;
 
-    public BookFormController(BookDao bookDao, PublisherDao publisherDao) {
+    private final AuthorDao authorDao;
+
+    public BookFormController(BookDao bookDao, PublisherDao publisherDao, AuthorDao authorDao) {
         this.bookDao = bookDao;
         this.publisherDao = publisherDao;
+        this.authorDao = authorDao;
     }
 
     @GetMapping("/list")
@@ -30,7 +33,12 @@ public class BookFormController {
         Book book = new Book();
         model.addAttribute("book", book);
         model.addAttribute("publishers", publisherDao.findAll());
+        model.addAttribute("authors", authorDao.findAll());
         return "book-form/add";
+    }
+    @ModelAttribute("authors")
+    public List<Author> authors() {
+        return this.authorDao.findAll();
     }
 
     @PostMapping("/add")
@@ -61,6 +69,7 @@ public class BookFormController {
         Book book = bookDao.findById(idVal);
         model.addAttribute("book", book);
         model.addAttribute("publishers", publisherDao.findAll());
+        model.addAttribute("authors", authorDao.findAll());
         return "/book-form/delete";
     }
 

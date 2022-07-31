@@ -29,7 +29,5 @@
     <input type="submit" value="Usuń">
 </form:form>
 
-<%--<a href="<c:url value="/book-form/delete?id=${book.id}"/>">usuń</a>--%>
-
 </body>
 </html>

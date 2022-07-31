@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import pl.coderslab.books.AuthorConverter;
 import pl.coderslab.books.PublisherConverter;
 
 import javax.persistence.EntityManagerFactory;
@@ -45,6 +46,7 @@ public class AppConfig implements WebMvcConfigurer {
         entityManagerFactoryBean.setPersistenceUnitName("dwarfPersistenceUnit");
         return entityManagerFactoryBean;
     }
+
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager jpaTransactionManager =
@@ -55,9 +57,15 @@ public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(getPublisherConverter());
+        registry.addConverter(getAuthorConverter());
     }
+
     @Bean
     public PublisherConverter getPublisherConverter() {
         return new PublisherConverter();
+    }
+
+    public AuthorConverter getAuthorConverter() {
+        return new AuthorConverter();
     }
 }

@@ -3,6 +3,7 @@ package pl.coderslab.books;
 import lombok.*;
 
 import javax.persistence.*;
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,13 @@ public class Author {
     private String firstName;
     private String lastName;
 
-//    @ManyToMany
-//    private List<Book> books;
+    private String fullName;
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    @ManyToMany
+    private List<Book> books;
 
 }
