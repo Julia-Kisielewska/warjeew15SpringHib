@@ -39,6 +39,8 @@ public class Author {
         return firstName + " " + lastName;
     }
 
+
+    @ToString.Exclude
     @ManyToMany
     private List<Book> books;
 
